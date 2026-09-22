@@ -66,11 +66,21 @@ $("copy").onclick=async()=>{
  $("status").textContent="제목·본문·해시태그를 복사했습니다.";
 };
 $("post").onclick=async()=>{
- const title=encodeURIComponent($("title").value);
- const shareUrl=encodeURIComponent("https://organizer7899-bot.github.io/naver-blog-publisher/publisher02/");
- try{await copyPost();}catch(e){}
- $("status").textContent="네이버 공유창을 엽니다. 제목은 함께 전달됩니다.";
- window.open("https://share.naver.com/web/shareView?url="+shareUrl+"&title="+title,"_blank");
+ const title=$("title").value;
+ const body=$("body").value;
+ const tags=$("tags").value;
+ const text=title+"\\n\\n"+body+"\\n\\n"+tags;
+ try{
+  if(navigator.share){
+   await navigator.share({title:title,text:text});
+   $("status").textContent="제목·본문·해시태그를 공유했습니다.";
+  }else{
+   await navigator.clipboard.writeText(text);
+   $("status").textContent="공유 기능을 지원하지 않아 제목·본문·해시태그를 복사했습니다.";
+  }
+ }catch(e){
+  if(e.name!=="AbortError") $("status").textContent="공유가 취소되었거나 지원되지 않습니다.";
+ }
 };
 $("openPage").onclick=()=>{
  window.open("https://organizer7899-bot.github.io/naver-blog-publisher/publisher02/","_blank");
