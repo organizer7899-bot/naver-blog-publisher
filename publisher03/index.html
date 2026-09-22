@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>네이버 블로그 퍼블리셔02</title>
+<style>
+body{margin:0;background:#f5f7f8;color:#18202a;font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+.wrap{max-width:760px;margin:auto;padding:20px}.card{background:#fff;border-radius:18px;padding:20px;margin-top:16px;box-shadow:0 4px 20px #0001}
+h1{font-size:24px}.step{font-size:18px;font-weight:800;margin:0 0 12px}
+input,textarea,button{width:100%;box-sizing:border-box;padding:13px;border-radius:10px;font-size:15px;font-family:inherit}
+textarea{min-height:220px;margin-top:8px}input{border:1px solid #ccd3dc}button{border:0;background:#03c75a;color:white;font-weight:800;margin-top:12px}
+button.secondary{background:#18202a}.hidden{display:none}.label{font-weight:800;margin-top:16px;display:block}.info{margin-top:10px;color:#667085}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>네이버 블로그 퍼블리셔02</h1>
+<div class="card">
+<p class="step">① 동영상 선택</p>
+<input id="video" type="file" accept="video/*">
+<div id="fileInfo" class="info"></div>
+</div>
+<div id="content" class="card hidden">
+<label class="label">② 제목</label>
+<input id="title">
+<button id="copyTitle">제목 복사</button>
+<label class="label">③ 본문</label>
+<textarea id="body"></textarea>
+<button id="copyBody">본문 복사</button>
+<label class="label">④ 해시태그</label>
+<input id="tags">
+<button id="copyTags">해시태그 복사</button>
+<button id="copy">⑤ 본문과 해시태그 복사</button>
+<button id="post">⑥ 네이버 공유하기</button>
+<div id="status" class="info"></div>
+</div>
+</div>
+<script>
+const posts={
+"1000021074.mp4":{title:"세금계산서까지 발행했는데 거래처가 돈을 안 주나요?",body:"세금계산서까지 발행했는데도 거래처에서 대금을 지급하지 않고 있다면 먼저 세금계산서만 확인할 것이 아니라 전체 거래 내용을 함께 확인해보세요.\n\n① 실제 거래 내용과 계약 조건 확인\n② 세금계산서 금액 확인\n③ 실제 입금된 금액 확인\n④ 남은 미수금 정확하게 계산\n⑤ 계약서·거래명세서·납품자료·입금내역 등 관련 자료 정리\n\n세금계산서 금액과 실제 입금내역을 비교하면 현재 미수금이 얼마인지 정확하게 확인하는 데 도움이 됩니다.\n\n미수금 회수를 준비한다면 세금계산서뿐 아니라 계약서와 거래명세서, 납품자료, 입금내역 등 전체 거래자료를 함께 정리해두세요.\n\n고려신용정보 | 채권관리·미수금 회수 상담",tags:"#미수금 #미수금회수 #거래처미수금 #세금계산서 #거래대금 #대금미지급 #채권추심 #채권관리 #사업자"},
+"1000021076.mp4":{title:"미수금 상담 전, 입금내역과 연락기록부터 정리하세요",body:"미수금 때문에 상담을 고민하고 있다면 먼저 관련 자료부터 정리해두세요.\n\n특히 중요한 자료는\n① 계약서 및 거래자료\n② 입금내역\n③ 문자·카톡·이메일 등 연락기록\n④ 상대방에게 지급을 요청한 내용\n⑤ 실제 남아 있는 미수금 금액입니다.\n\n입금내역과 연락기록을 날짜별로 정리해두면 거래 과정과 미지급 금액을 확인하는 데 도움이 됩니다.\n\n못 받은 돈 때문에 혼자 고민하지 마세요.\n상담 전에 자료부터 차근차근 준비해보세요.\n\n고려신용정보 | 채권관리·미수금 회수 상담",tags:"#미수금 #미수금회수 #미수금상담 #채권관리 #채권추심 #대금미지급 #거래처미수금 #입금내역 #카톡증거 #사업자"},
+"1000021088.mp4":{title:"미수금 회수 전, 이 자료부터 꼭 확인하세요",body:"미수금 회수를 준비하고 있다면 관련 자료부터 꼼꼼하게 확인해보세요.\n\n① 계약서와 견적서\n거래의 시작을 확인할 수 있는 가장 기본적인 자료입니다.\n\n② 거래명세서와 세금계산서\n거래한 내용과 금액을 정확하게 확인하는 데 중요한 자료입니다.\n\n③ 납품자료와 실제 입금내역\n제품이나 서비스를 실제로 제공했는지, 그리고 얼마가 입금됐는지 확인하세요.\n\n④ 문자·카톡·이메일 등 지급 약속 기록\n상대방이 지급을 약속한 내용도 중요한 증빙자료가 될 수 있습니다.\n\n관련 자료를 한곳에 정리해두면 거래 내용과 미수금 금액을 확인하는 데 도움이 됩니다.\n\n못 받은 돈 때문에 혼자 고민하지 마세요. 필요한 자료부터 차근차근 정리해보세요.\n\n고려신용정보 | 채권관리·미수금 회수 상담",tags:"#미수금 #미수금회수 #미수금상담 #채권관리 #채권추심 #용역대금 #대금미지급 #거래처미수금 #계약서 #견적서 #입금내역"},
+"1000021069.mp4":{title:"용역은 끝났는데 돈을 못 받고 있나요?",body:"용역은 끝났는데 아직 대금을 받지 못했다면 먼저 계약서와 견적서부터 확인해보세요.\n\n① 계약서와 견적서에서 지급 조건 확인\n② 실제 용역 내용과 거래자료 확인\n③ 세금계산서와 입금내역 비교\n④ 실제 미지급 금액 정확하게 계산\n⑤ 계약서·견적서·작업보고서·세금계산서·입금내역 등 관련 자료 정리\n\n용역대금 미수금은 계약 조건과 실제 거래자료를 함께 확인하는 것이 중요합니다.\n\n자료를 날짜와 금액별로 정리해두면 현재 미지급 금액을 확인하고 상담을 준비하는 데 도움이 됩니다.\n\n못 받은 돈 때문에 혼자 고민하지 마세요. 필요한 자료부터 차근차근 확인해보세요.\n\n고려신용정보 | 채권관리·미수금 회수 상담",tags:"#미수금 #미수금회수 #미수금상담 #채권관리 #채권추심 #용역대금 #대금미지급 #거래처미수금 #계약서 #견적서 #입금내역"},
+"1000021027.mp4":{title:"물건은 납품했는데 거래처가 돈을 안 준다면, 먼저 이것부터 확인하세요",body:"물건은 납품했는데 거래처에서 대금을 지급하지 않고 있다면 먼저 거래 내용을 확인할 수 있는 자료부터 정리해보세요.\n\n① 발주서와 거래명세서 확인\n② 실제 납품한 물품과 수량 확인\n③ 세금계산서와 거래금액 확인\n④ 실제 입금된 금액 확인\n⑤ 문자·카톡·이메일 등 지급 요청 및 약속 기록 정리\n\n특히 발주서와 거래명세서는 어떤 물품을 얼마에 거래했는지 확인하는 데 도움이 될 수 있습니다.\n\n납품한 내용과 계약·거래자료, 입금내역을 함께 확인해 정확한 미지급 금액을 계산해보세요.\n\n관련 자료를 날짜와 금액별로 정리해두면 미수금 회수를 준비하는 데 도움이 됩니다.\n\n고려신용정보 | 채권관리·미수금 회수 상담",tags:"#물품대금 #물품대금미수금 #미수금 #미수금회수 #거래처미수금 #대금미지급 #채권관리 #채권추심 #발주서 #거래명세서"},
+"1000021023.mp4":{title:"공사대금을 못 받았다면, 이 자료부터 확인하세요",body:"공사는 끝났는데 공사대금을 받지 못하고 있다면 관련 자료부터 정확하게 정리해보세요.\n\n① 계약서와 견적서\n② 공사사진과 작업내역\n③ 거래명세서 및 세금계산서\n④ 실제 입금내역\n⑤ 문자·카톡·이메일 등 지급 약속 및 요청 기록\n\n특히 공사 과정에서 작성된 작업내역과 공사사진은 실제 공사가 진행됐다는 사실을 확인하는 데 도움이 될 수 있습니다.\n\n계약 내용과 실제 공사내역, 입금된 금액을 함께 확인해 정확한 미지급 금액을 계산하는 것이 중요합니다.\n\n관련 자료를 날짜와 금액별로 정리해두고 미수금 회수를 준비해보세요.\n\n고려신용정보 | 채권관리·미수금 회수 상담",tags:"#공사대금 #공사대금미수금 #미수금 #미수금회수 #공사비 #대금미지급 #채권관리 #채권추심 #공사사진 #작업내역"},
+};
+const $=id=>document.getElementById(id);
+$("video").addEventListener("change",e=>{
+ const f=e.target.files[0]; if(!f)return;
+ $("fileInfo").textContent=f.name;
+ const p=posts[f.name];
+ if(p){
+  $("title").value=p.title;$("body").value=p.body;$("tags").value=p.tags;
+  $("content").classList.remove("hidden");
+  $("status").textContent="이 영상에 맞는 게시 내용이 준비되었습니다.";
+ }else{
+  $("content").classList.remove("hidden");
+  $("title").value="";$("body").value="";$("tags").value="";
+  $("status").textContent="아직 이 영상에 대한 게시 내용이 등록되지 않았습니다.";
+ }
+});
+async function copyText(text){
+ if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);return true;}
+ const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();const ok=document.execCommand("copy");ta.remove();if(!ok)throw new Error("copy failed");return true;
+}
+async function copyPost(){
+ const text=$("title").value+"\n\n"+$("body").value+"\n\n"+$("tags").value;
+ await copyText(text);
+ return text;
+}
+$("copy").onclick=async()=>{
+ const text=$("body").value+"\n\n"+$("tags").value;
+ await copyText(text);
+ $("status").textContent="본문과 해시태그를 복사했습니다.";
+};
+$("post").onclick=async()=>{
+ const text=$("title").value+"\\n\\n"+$("body").value+"\\n\\n"+$("tags").value;
+ try{await navigator.clipboard.writeText(text);}catch(e){}
+ $("status").textContent="내용을 복사했습니다. 새 창에서 네이버 블로그 글쓰기를 엽니다. 제목·본문·해시태그를 각각 붙여넣으세요.";
+ window.open("https://blog.naver.com/PostWriteForm.naver?blogId=thkim5579","_blank");
+};
+$("copyTitle").onclick=async()=>{await copyText($("title").value);$("status").textContent="제목을 복사했습니다."};
+$("copyBody").onclick=async()=>{await copyText($("body").value);$("status").textContent="본문을 복사했습니다."};
+$("copyTags").onclick=async()=>{await copyText($("tags").value);$("status").textContent="해시태그를 복사했습니다."};
+
+</script>
+</body>
+</html>
