@@ -84,23 +84,11 @@ async function copyPost(){
  return text;
 }
 $("copy").onclick=async()=>{
- const text=$("body").value+"\\n\\n"+$("tags").value;
- await navigator.clipboard.writeText(text);
- $("status").textContent="본문과 해시태그를 복사했습니다.";
+ const ok=await copyText($("body").value+"\n\n"+$("tags").value);
+ $("status").textContent=ok?"본문과 해시태그를 복사했습니다.":"복사에 실패했습니다. 텍스트를 길게 눌러 복사하세요.";
 };
 $("post").onclick=async()=>{
- const text=$("title").value+"\\n\\n"+$("body").value+"\\n\\n"+$("tags").value;
- try{await navigator.clipboard.writeText(text);}catch(e){}
- $("status").textContent="내용을 복사했습니다. 새 창에서 네이버 블로그 글쓰기를 엽니다. 제목·본문·해시태그를 각각 붙여넣으세요.";
+ const ok=await copyText($("title").value+"\n\n"+$("body").value+"\n\n"+$("tags").value);
+ $("status").textContent=ok?"내용을 복사했습니다. 새 창에서 네이버 블로그 글쓰기를 엽니다.":"새 창에서 네이버 블로그 글쓰기를 엽니다.";
  window.open("https://blog.naver.com/PostWriteForm.naver?blogId=thkim5579","_blank");
 };
-$("openPage").onclick=()=>{
- window.open("https://organizer7899-bot.github.io/naver-blog-publisher/publisher02/","_blank");
-};
-$("copyTitle").onclick=async()=>{await navigator.clipboard.writeText($("title").value);$("status").textContent="제목을 복사했습니다."};
-$("copyBody").onclick=async()=>{await navigator.clipboard.writeText($("body").value);$("status").textContent="본문을 복사했습니다."};
-$("copyTags").onclick=async()=>{await navigator.clipboard.writeText($("tags").value);$("status").textContent="해시태그를 복사했습니다."};
-
-</script>
-</body>
-</html>
