@@ -13,7 +13,7 @@ label{display:block;font-weight:800;margin:15px 0 7px}input,textarea{width:100%;
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}.actions button:first-child,.actions button:nth-child(2){grid-column:1/-1}
 button{border:0;border-radius:11px;padding:13px;font-size:15px;font-weight:800;cursor:pointer}.primary{background:#03c75a;color:white}.secondary{background:#eef1f5;color:#18202a}
 .status{margin-top:12px;font-weight:700;min-height:22px}.guide{font-size:13px;line-height:1.7;color:#667085;background:#f8fafc;border-radius:12px;padding:13px;margin-top:14px}
-.checklist{margin-top:14px;padding:14px;border-radius:12px;background:#f0fff6;font-size:14px;line-height:1.8}.checklist b{color:#008f3f}
+.checklist{margin-top:14px;padding:14px;border-radius:12px;background:#f0fff6;font-size:14px;line-height:1.8}.checklist b{color:#008f3f}.checklist label{display:block;margin:2px 0;font-weight:600}.checklist input{width:auto;margin-right:7px;vertical-align:middle}
 @media(max-width:520px){.wrap{padding:12px}.actions{grid-template-columns:1fr}.actions button:first-child,.actions button:nth-child(2){grid-column:auto}h1{font-size:22px}}
 </style>
 </head>
@@ -35,17 +35,28 @@ button{border:0;border-radius:11px;padding:13px;font-size:15px;font-weight:800;c
 <button class="secondary" id="copy">전체 내용 복사</button><button class="secondary" id="copyBody">본문만 복사</button><button class="secondary" id="openBlog">내 블로그 열기</button>
 </div>
 <div id="status" class="status"></div>
-<div class="checklist"><b>게시 체크</b><br>□ 영상 선택 완료 &nbsp; □ 제목 확인 &nbsp; □ 본문 확인 &nbsp; □ 해시태그 확인</div>
-<div class="guide"><b>가장 간단한 방법</b><br>영상 선택 → 제목/본문 확인 → <b>⑥ 게시용 복사 + 블로그 열기</b> → 네이버 글쓰기에서 영상 첨부 → 붙여넣기 → 발행.<br><br>이 도구는 네이버 공식 공유 기능을 사용합니다. 네이버 블로그 글쓰기 API가 종료되어 외부 웹페이지에서 영상 파일까지 완전 자동 발행하는 기능은 제공되지 않습니다.</div>
+<div class="checklist"><b>게시 체크</b>
+<label><input id="c1" type="checkbox">영상 선택 완료</label>
+<label><input id="c2" type="checkbox">제목 확인</label>
+<label><input id="c3" type="checkbox">본문 확인</label>
+<label><input id="c4" type="checkbox">해시태그 확인</label>
+</div>
+<div class="guide"><b>가장 간단한 방법</b><br>영상 선택 → 제목/본문 확인 → <b>⑥ 게시용 복사 + 블로그 열기</b> → 네이버 글쓰기에서 영상 첨부 → 붙여넣기 → 발행.<br><br>입력한 제목·본문·해시태그는 이 브라우저에 자동 저장되어 다음에 다시 열어도 유지됩니다. 영상 파일 자체는 저장하지 않습니다.<br><br>이 도구는 네이버 공식 공유 기능을 사용합니다. 네이버 블로그 글쓰기 API가 종료되어 외부 웹페이지에서 영상 파일까지 완전 자동 발행하는 기능은 제공되지 않습니다.</div>
 </section></div>
 <script>
 const $=id=>document.getElementById(id);
+const keys=["title","body","tags","c1","c2","c3","c4"];
 const all=()=>[$("title").value.trim(),$("body").value.trim(),$("tags").value.trim()].filter(Boolean).join("\n\n");
-async function copyText(v,msg){try{await navigator.clipboard.writeText(v);$("status").textContent=msg}catch(e){$("status").textContent="복사 권한이 없어 직접 선택해 복사해주세요."}}
-$("video").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const p=$("preview");p.src=URL.createObjectURL(f);p.style.display="block";$("fileInfo").innerHTML='<span class="pill">'+f.name+'</span><span class="pill">'+(f.size/1024/1024).toFixed(1)+' MB</span>';$("status").textContent="영상 선택 완료";});
+function save(){keys.forEach(k=>{const el=$(k);if(el) localStorage.setItem("naverBlog_"+k,el.type==="checkbox"?String(el.checked):el.value);});}
+function load(){keys.forEach(k=>{const el=$(k),v=localStorage.getItem("naverBlog_"+k);if(!el||v===null)return;if(el.type==="checkbox")el.checked=v==="true";else el.value=v;});}
+async function copyText(v,msg){try{await navigator.clipboard.writeText(v);$("status").textContent=msg;save()}catch(e){$("status").textContent="복사 권한이 없어 직접 선택해 복사해주세요."}}
+load();
+["title","body","tags"].forEach(k=>$(k).addEventListener("input",save));
+["c1","c2","c3","c4"].forEach(k=>$(k).addEventListener("change",save));
+$("video").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const p=$("preview");p.src=URL.createObjectURL(f);p.style.display="block";$("fileInfo").innerHTML='<span class="pill">'+f.name+'</span><span class="pill">'+(f.size/1024/1024).toFixed(1)+' MB</span>';$("c1").checked=true;save();$("status").textContent="영상 선택 완료";});
 $("copy").onclick=()=>copyText(all(),"제목·본문·해시태그를 모두 복사했습니다.");
 $("copyBody").onclick=()=>copyText($("body").value.trim(),"본문을 복사했습니다.");
 $("openBlog").onclick=()=>window.open("https://blog.naver.com/thkim5579","_blank");
-$("ready").onclick=async()=>{await copyText(all(),"게시용 내용을 복사했습니다. 네이버 블로그를 엽니다.");setTimeout(()=>window.open("https://blog.naver.com/thkim5579","_blank"),250);};
+$("ready").onclick=async()=>{await copyText(all(),"게시용 내용을 복사했습니다. 네이버 블로그를 엽니다.");$("c2").checked=true;$("c3").checked=true;$("c4").checked=true;save();setTimeout(()=>window.open("https://blog.naver.com/thkim5579","_blank"),250);};
 $("share").onclick=()=>{const title=$("title").value.trim(),text=$("body").value.trim()+"\n\n"+$("tags").value.trim();const url="https://share.naver.com/web/shareView?url="+encodeURIComponent("https://blog.naver.com/thkim5579")+"&title="+encodeURIComponent(title+"\n\n"+text);window.open(url,"naverShare","width=600,height=760");$("status").textContent="네이버 공유 화면을 열었습니다.";};
 </script></body></html>
