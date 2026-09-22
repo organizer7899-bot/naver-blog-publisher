@@ -74,7 +74,10 @@ const all=()=>[$("title").value.trim(),$("body").value.trim(),$("tags").value.tr
 function save(){keys.forEach(k=>{const el=$(k);if(el)localStorage.setItem("naverBlog_"+k,el.type==="checkbox"?String(el.checked):el.value);});}
 function clearSaved(){keys.forEach(k=>localStorage.removeItem("naverBlog_"+k));location.reload();}
 function prepareContent(filename){
- const m=filename.match(/(?:short[_-]?|쇼츠[_-]?)(0?\d{1,2})/i),data=m&&posts[m[1]]?posts[m[1]]:generic;
+ const exact={
+  "1000021104.mp4":{title:"거래처가 돈을 안 주고 있나요? 먼저 상황부터 정확히 확인하세요",body:"거래처가 돈을 주지 않고 있다면 먼저 현재 상황부터 정확히 확인해보세요.\\n\\n거래 내용과 계약 조건, 약정된 지급일, 실제 입금 내역을 확인하고 미지급 금액을 정확하게 정리하는 것이 중요합니다.\\n\\n관련 자료를 정리해두면 이후 미수금 회수 상담을 준비하는 데 도움이 됩니다.\\n\\n고려신용정보 | 채권관리·미수금 회수 상담",tags:"#미수금 #미수금회수 #채권추심 #채권관리 #거래대금 #대금미지급 #사업자"}
+ };
+ const m=filename.match(/(?:short[_-]?|쇼츠[_-]?)(0?\\d{1,2})/i),data=exact[filename]||exact[filename.split("/").pop()]||(m&&posts[m[1]]?posts[m[1]]:generic);
  $("title").value=data.title;$("body").value=data.body;$("tags").value=data.tags;save();
 }
 async function copyText(v,msg){try{await navigator.clipboard.writeText(v);$("status").textContent=msg;save()}catch(e){$("status").textContent="복사 권한이 없어 직접 선택해 복사해주세요."}}
