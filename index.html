@@ -101,7 +101,7 @@ function prepareContent(filename){
   "1000021025.mp4":{title:"미수금 일부를 받았다면? 남은 금액과 변제 내역을 꼭 확인하세요",body:"미수금을 일부 받았다고 해서 거래가 모두 끝난 것은 아닙니다.\\n\\n상환 약속이나 일부 변제 내역도 중요한 자료가 될 수 있습니다.\\n\\n① 전체 거래금액 확인\\n② 실제 입금된 금액 확인\\n③ 일부 변제 날짜와 금액 확인\\n④ 남은 미수금 정확하게 계산\\n⑤ 입금내역과 거래자료 보관\\n\\n특히 일부 금액을 받았다면 전체 금액과 실제 입금액을 비교해 남은 금액을 정확하게 확인하는 것이 중요합니다.\\n\\n미수금과 관련된 자료를 정리해두면 이후 회수 상담을 준비하는 데 도움이 됩니다.\\n\\n고려신용정보 | 채권관리·미수금 회수 상담",tags:"#미수금 #미수금회수 #일부변제 #변제내역 #채권추심 #채권관리 #거래대금 #대금미지급"}
  };
  const m=clean.match(/(?:short[_-]?|쇼츠[_-]?)(0?\\d{1,2})/i);
- const data=exact[clean]||(m&&posts[m[1]]?posts[m[1]]:generic);
+ const data=exact[clean]||(clean.includes("shorts_common_template_slideshow_v2_no_crop")?exact["shorts_common_template_slideshow_v2_no_crop_2.mp4"]:(m&&posts[m[1]]?posts[m[1]]:generic));
  $("title").value=data.title;
  $("body").value=data.body;
  $("tags").value=data.tags;
