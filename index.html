@@ -95,6 +95,7 @@ async function copyText(v,msg){try{await navigator.clipboard.writeText(v);$("sta
 function markReady(){return $("title").value.trim()&&$("body").value.trim()&&$("tags").value.trim();}
 ["title","body","tags"].forEach(k=>$(k).addEventListener("input",save));
 ["c1","c2","c3","c4","c5"].forEach(k=>$(k).addEventListener("change",save));
+$("video").addEventListener("click",()=>{$("video").value=""});
 $("video").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const p=$("preview");p.src=URL.createObjectURL(f);p.style.display="block";$("fileInfo").innerHTML='<span class="pill">'+f.name+'</span><span class="pill">'+(f.size/1024/1024).toFixed(1)+' MB</span>';$("contentArea").classList.remove("hidden");prepareContent(f.name);$("c1").checked=true;$("c2").checked=false;$("c3").checked=false;$("c4").checked=false;save();const m=f.name.match(/(?:short[_-]?|쇼츠[_-]?)(0?\d{1,2})/i);$("status").textContent=m&&posts[m[1]]?"영상에 맞는 게시 내용을 준비했습니다.":"영상 파일명을 확인해 기본 게시 내용을 준비했습니다.";});
 $("copy").onclick=()=>copyText(all(),"제목·본문·해시태그를 모두 복사했습니다.");
 $("copyBody").onclick=()=>copyText($("body").value.trim(),"본문을 복사했습니다.");
