@@ -11,7 +11,7 @@ h1{font-size:24px}.step{font-size:18px;font-weight:800;margin:0 0 12px}
 input,textarea,button{width:100%;box-sizing:border-box;padding:13px;border-radius:10px;font-size:15px;font-family:inherit}
 textarea{min-height:220px;margin-top:8px}input{border:1px solid #ccd3dc}button{border:0;background:#03c75a;color:white;font-weight:800;margin-top:12px}
 button.secondary{background:#18202a}.hidden{display:none}.label{font-weight:800;margin-top:16px;display:block}.info{margin-top:10px;color:#667085}
-</style>
+button.copied{background:#111 !important;color:#fff !important;transform:scale(.98);}\n</style>
 </head>
 <body>
 <div class="wrap">
@@ -63,44 +63,31 @@ $("video").addEventListener("change",e=>{
 async function copyText(text){
  text=String(text||"");
  try{
-  if(navigator.clipboard&&window.isSecureContext){
-   await navigator.clipboard.writeText(text);
-   return true;
-  }
+  if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);return true;}
  }catch(e){}
  try{
   const ta=document.createElement("textarea");
-  ta.value=text;
-  ta.setAttribute("readonly","");
-  ta.style.position="fixed";
-  ta.style.left="-9999px";
-  ta.style.top="0";
-  ta.style.opacity="0";
-  document.body.appendChild(ta);
-  ta.focus();
-  ta.select();
-  ta.setSelectionRange(0,ta.value.length);
-  const ok=document.execCommand("copy");
-  ta.remove();
-  if(ok)return true;
+  ta.value=text;ta.setAttribute("readonly","");
+  ta.style.position="fixed";ta.style.left="-9999px";
+  document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);
+  const ok=document.execCommand("copy");ta.remove();if(ok)return true;
  }catch(e){}
  return false;
 }
-async function doCopy(text,label){
+async function doCopy(btn,text,label){
  const ok=await copyText(text);
- if(ok){
-  $("status").textContent=label+" 복사 완료";
- }else{
-  $("status").textContent=label+" 복사에 실패했습니다. 아래 내용을 길게 눌러 복사하세요.";
-  $("status").style.whiteSpace="pre-wrap";
-  $("status").textContent+="\n\n"+text;
- }
+ btn.classList.add("copied");
+ const old=btn.textContent;
+ btn.textContent=ok?label+" ✓":"복사 실패";
+ setTimeout(()=>{btn.classList.remove("copied");btn.textContent=old;},1200);
+ if(ok)$("status").textContent=label+" 복사 완료";
+ else $("status").textContent="복사에 실패했습니다.";
  return ok;
 }
-$("copy").onclick=()=>doCopy($("body").value+"\n\n"+$("tags").value,"본문과 해시태그");
-$("copyTitle").onclick=()=>doCopy($("title").value,"제목");
-$("copyBody").onclick=()=>doCopy($("body").value,"본문");
-$("copyTags").onclick=()=>doCopy($("tags").value,"해시태그");
+$("copy").onclick=e=>doCopy(e.currentTarget,$("body").value+"\n\n"+$("tags").value,"본문과 해시태그");
+$("copyTitle").onclick=e=>doCopy(e.currentTarget,$("title").value,"제목");
+$("copyBody").onclick=e=>doCopy(e.currentTarget,$("body").value,"본문");
+$("copyTags").onclick=e=>doCopy(e.currentTarget,$("tags").value,"해시태그");
 </script>
 </body>
 </html>
