@@ -1,82 +1,62 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>네이버 블로그 게시 도구</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>네이버 블로그 게시 준비</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif;background:#f5f7fa;color:#172033}
-.wrap{max-width:820px;margin:0 auto;padding:24px 16px 48px}.card{background:#fff;border-radius:18px;padding:22px;margin:14px 0;box-shadow:0 5px 20px #0000000b}
-h1{margin:0 0 6px;font-size:25px}.sub{color:#667085;margin:0 0 20px}
-label{display:block;font-weight:700;margin:16px 0 8px}input,textarea{width:100%;border:1px solid #d9dee8;border-radius:11px;padding:12px;font-size:15px;background:#fff}textarea{min-height:220px;resize:vertical}
-.file{border:2px dashed #cfd6e2;border-radius:14px;padding:22px;text-align:center;color:#667085}.file input{border:0;padding:0;margin-top:10px}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}button{border:0;border-radius:11px;padding:13px 16px;font-weight:800;cursor:pointer;font-size:15px}
-.primary{background:#03c75a;color:#fff}.secondary{background:#eef1f6;color:#172033}.notice{font-size:13px;line-height:1.65;color:#667085;background:#f8fafc;padding:13px;border-radius:10px;margin-top:14px}
-.preview{width:100%;max-height:430px;border-radius:12px;margin-top:12px;display:none;background:#111}
-.status{margin-top:12px;font-weight:700}
-.small{font-size:12px;color:#8a94a6}
+*{box-sizing:border-box}body{margin:0;background:#f5f7f8;color:#18202a;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif}
+.wrap{max-width:860px;margin:auto;padding:18px}.top{padding:8px 2px 16px}.badge{display:inline-block;background:#03c75a;color:#fff;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800}
+h1{margin:10px 0 4px;font-size:25px}.sub{margin:0;color:#697586}.card{background:#fff;border-radius:18px;padding:20px;margin:14px 0;box-shadow:0 6px 22px #0000000b}
+label{display:block;font-weight:800;margin:15px 0 7px}input,textarea{width:100%;padding:12px;border:1px solid #d9dee7;border-radius:11px;font-size:15px;font-family:inherit}textarea{min-height:190px;resize:vertical}
+.drop{border:2px dashed #cbd3df;border-radius:15px;padding:18px;text-align:center}.drop input{border:0;padding:8px 0}.drop video{display:none;width:100%;max-height:390px;border-radius:12px;margin-top:10px;background:#111}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.pill{background:#f1f4f7;border-radius:999px;padding:6px 10px;font-size:12px;color:#667085}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}.actions button:first-child{grid-column:1/-1}
+button{border:0;border-radius:11px;padding:13px;font-size:15px;font-weight:800;cursor:pointer}.primary{background:#03c75a;color:white}.secondary{background:#eef1f5;color:#18202a}
+.status{margin-top:12px;font-weight:700;min-height:22px}.guide{font-size:13px;line-height:1.7;color:#667085;background:#f8fafc;border-radius:12px;padding:13px;margin-top:14px}
+@media(max-width:520px){.wrap{padding:12px}.actions{grid-template-columns:1fr}.actions button:first-child{grid-column:auto}h1{font-size:22px}}
 </style>
 </head>
-<body>
-<div class="wrap">
-<div class="card">
-<h1>네이버 블로그 게시 도구</h1>
-<p class="sub">블로그: blog.naver.com/thkim5579</p>
+<body><div class="wrap">
+<header class="top"><span class="badge">NAVER BLOG</span><h1>네이버 블로그 게시 준비</h1><p class="sub">내 블로그 · blog.naver.com/thkim5579</p></header>
 
-<label>동영상</label>
-<div class="file">
-동영상 파일을 선택하세요
-<input id="video" type="file" accept="video/*">
-<video id="preview" class="preview" controls></video>
-</div>
+<section class="card">
+<label>① 동영상 선택</label>
+<div class="drop">MP4 등 동영상 파일을 선택하세요<input id="video" type="file" accept="video/*"><video id="preview" controls></video><div id="fileInfo" class="meta"></div></div>
 
-<label for="title">제목</label>
+<label for="title">② 제목</label>
 <input id="title" value="미수금 회수 전, 이 자료부터 꼭 확인하세요">
 
-<label for="body">본문</label>
+<label for="body">③ 본문</label>
 <textarea id="body">미수금 회수를 생각하고 있다면 먼저 증빙자료부터 확인해보세요.
 
 계약서, 거래명세서, 세금계산서, 납품자료, 입금내역, 연락기록 등 거래와 미수금 발생 사실을 확인할 수 있는 자료를 정리하는 것이 중요합니다.
 
 자료가 제대로 정리되어 있으면 미수금 회수 상담을 준비하는 데 도움이 됩니다.</textarea>
 
-<label for="tags">해시태그</label>
+<label for="tags">④ 해시태그</label>
 <input id="tags" value="#미수금 #미수금회수 #채권추심 #미수금관리 #공사대금 #물품대금 #대금미지급 #채권관리 #사업자 #거래대금">
 
 <div class="actions">
-<button class="primary" id="share">네이버 블로그로 보내기</button>
-<button class="secondary" id="copy">제목·본문 복사</button>
+<button class="primary" id="share">⑤ 네이버 블로그 공유 열기</button>
+<button class="secondary" id="copy">전체 내용 복사</button>
+<button class="secondary" id="copyBody">본문만 복사</button>
 <button class="secondary" id="openBlog">내 블로그 열기</button>
 </div>
 <div id="status" class="status"></div>
-<div class="notice">
-<strong>게시 방식 안내</strong><br>
-네이버의 현재 공식 공유 기능을 사용합니다. 버튼을 누르면 네이버 로그인/공유 화면이 열립니다. 
-외부 웹페이지에서 네이버 블로그 글쓰기 API로 동영상 파일까지 자동 발행하는 기능은 현재 공식적으로 제공되지 않으므로, 동영상 파일 자체의 첨부·최종 발행은 네이버 화면에서 확인해야 합니다.
-</div>
-</div>
+<div class="guide"><b>사용 순서</b><br>영상 선택 → 제목/본문 확인 → 전체 내용 복사 → 네이버 블로그 공유 열기 → 네이버에서 영상 첨부 및 최종 발행.<br><br>이 도구는 네이버의 공식 공유 기능을 사용합니다. 네이버 블로그 글쓰기 API가 종료되어 외부 웹페이지에서 영상 파일까지 완전 자동 발행하는 기능은 제공되지 않습니다.</div>
+</section>
 </div>
 <script>
 const $=id=>document.getElementById(id);
-$("video").addEventListener("change",e=>{
- const f=e.target.files[0]; if(!f)return;
- const p=$("preview"); p.src=URL.createObjectURL(f); p.style.display="block";
- $("status").textContent="영상 선택 완료: "+f.name;
-});
-$("share").onclick=()=>{
- const title=$("title").value.trim();
- const text=$("body").value.trim()+"\n\n"+$("tags").value.trim();
- const source="https://blog.naver.com/thkim5579";
- const url="https://share.naver.com/web/shareView?url="+encodeURIComponent(source)+"&title="+encodeURIComponent(title+"\n\n"+text);
- window.open(url,"naverShare","width=600,height=700");
- $("status").textContent="네이버 공유 화면을 열었습니다.";
-};
-$("copy").onclick=async()=>{
- const v=$("title").value.trim()+"\n\n"+$("body").value.trim()+"\n\n"+$("tags").value.trim();
- await navigator.clipboard.writeText(v);
- $("status").textContent="제목·본문·해시태그를 복사했습니다.";
-};
+const all=()=>[$("title").value.trim(),$("body").value.trim(),$("tags").value.trim()].filter(Boolean).join("\n\n");
+async function copyText(v,msg){try{await navigator.clipboard.writeText(v);$("status").textContent=msg}catch(e){$("status").textContent="복사 권한이 없어 직접 선택해 복사해주세요."}}
+$("video").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const p=$("preview");p.src=URL.createObjectURL(f);p.style.display="block";$("fileInfo").innerHTML='<span class="pill">'+f.name+'</span><span class="pill">'+(f.size/1024/1024).toFixed(1)+' MB</span>';$("status").textContent="영상 선택 완료";});
+$("copy").onclick=()=>copyText(all(),"제목·본문·해시태그를 모두 복사했습니다.");
+$("copyBody").onclick=()=>copyText($("body").value.trim(),"본문을 복사했습니다.");
 $("openBlog").onclick=()=>window.open("https://blog.naver.com/thkim5579","_blank");
-</script>
-</body>
-</html>
+$("share").onclick=()=>{
+ const title=$("title").value.trim(), text=$("body").value.trim()+"\n\n"+$("tags").value.trim();
+ const url="https://share.naver.com/web/shareView?url="+encodeURIComponent("https://blog.naver.com/thkim5579")+"&title="+encodeURIComponent(title+"\n\n"+text);
+ window.open(url,"naverShare","width=600,height=760"); $("status").textContent="네이버 공유 화면을 열었습니다.";
+};
+</script></body></html>
