@@ -85,7 +85,19 @@ async function copyPost(){
 }
 $("copy").onclick=async()=>{
  const ok=await copyText($("body").value+"\n\n"+$("tags").value);
- $("status").textContent=ok?"본문과 해시태그를 복사했습니다.":"복사에 실패했습니다. 텍스트를 길게 눌러 복사하세요.";
+ $("status").textContent=ok?"본문과 해시태그를 복사했습니다.":"복사에 실패했습니다.";
+};
+$("copyTitle").onclick=async()=>{
+ const ok=await copyText($("title").value);
+ $("status").textContent=ok?"제목을 복사했습니다.":"복사에 실패했습니다.";
+};
+$("copyBody").onclick=async()=>{
+ const ok=await copyText($("body").value);
+ $("status").textContent=ok?"본문을 복사했습니다.":"복사에 실패했습니다.";
+};
+$("copyTags").onclick=async()=>{
+ const ok=await copyText($("tags").value);
+ $("status").textContent=ok?"해시태그를 복사했습니다.":"복사에 실패했습니다.";
 };
 $("post").onclick=async()=>{
  const ok=await copyText($("title").value+"\n\n"+$("body").value+"\n\n"+$("tags").value);
