@@ -70,17 +70,9 @@ $("post").onclick=async()=>{
  const body=$("body").value;
  const tags=$("tags").value;
  const text=title+"\\n\\n"+body+"\\n\\n"+tags;
- try{
-  if(navigator.share){
-   await navigator.share({title:title,text:text});
-   $("status").textContent="제목·본문·해시태그를 공유했습니다.";
-  }else{
-   await navigator.clipboard.writeText(text);
-   $("status").textContent="공유 기능을 지원하지 않아 제목·본문·해시태그를 복사했습니다.";
-  }
- }catch(e){
-  if(e.name!=="AbortError") $("status").textContent="공유가 취소되었거나 지원되지 않습니다.";
- }
+ try{await navigator.clipboard.writeText(text);}catch(e){}
+ $("status").textContent="제목·본문·해시태그를 복사했습니다. 네이버 블로그 글쓰기를 엽니다.";
+ window.open("https://blog.naver.com/PostWriteForm.naver?blogId=thkim5579","_blank");
 };
 $("openPage").onclick=()=>{
  window.open("https://organizer7899-bot.github.io/naver-blog-publisher/publisher02/","_blank");
