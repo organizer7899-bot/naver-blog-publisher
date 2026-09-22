@@ -37,7 +37,7 @@ button{border:0;border-radius:11px;padding:13px;font-size:15px;font-weight:800;c
 <input id="tags" value="#미수금 #미수금회수 #채권추심 #미수금관리 #공사대금 #물품대금 #대금미지급 #채권관리 #사업자 #거래대금">
 
 <div class="actions">
-<button class="primary" id="share">⑤ 네이버 블로그 공유 열기</button>
+<button class="primary" id="share">⑤ 네이버 블로그 공유 열기</button><button class="primary" id="ready">⑥ 게시용 복사 + 블로그 열기</button>
 <button class="secondary" id="copy">전체 내용 복사</button>
 <button class="secondary" id="copyBody">본문만 복사</button>
 <button class="secondary" id="openBlog">내 블로그 열기</button>
@@ -54,6 +54,7 @@ $("video").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;
 $("copy").onclick=()=>copyText(all(),"제목·본문·해시태그를 모두 복사했습니다.");
 $("copyBody").onclick=()=>copyText($("body").value.trim(),"본문을 복사했습니다.");
 $("openBlog").onclick=()=>window.open("https://blog.naver.com/thkim5579","_blank");
+$("ready").onclick=async()=>{await copyText(all(),"게시용 내용을 복사했습니다. 네이버 블로그를 엽니다.");setTimeout(()=>window.open("https://blog.naver.com/thkim5579","_blank"),250);};
 $("share").onclick=()=>{
  const title=$("title").value.trim(), text=$("body").value.trim()+"\n\n"+$("tags").value.trim();
  const url="https://share.naver.com/web/shareView?url="+encodeURIComponent("https://blog.naver.com/thkim5579")+"&title="+encodeURIComponent(title+"\n\n"+text);
