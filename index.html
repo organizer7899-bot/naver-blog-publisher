@@ -26,9 +26,6 @@ button{border:0;border-radius:11px;padding:13px;font-size:15px;font-weight:800;c
 <section class="card">
 <label>① 동영상 선택</label>
 <div class="drop">MP4 등 동영상 파일을 선택하세요<input id="video" type="file" accept="video/*"><video id="preview" controls></video><div id="fileInfo" class="meta"></div></div>
-<label for="videoLink">①-1 동영상 링크 (YouTube / Instagram)</label>
-<input id="videoLink" type="url" placeholder="https://youtu.be/... 또는 https://www.instagram.com/...">
-<div class="hint">네이버 글쓰기에서 이 링크를 붙여넣어 동영상 링크/콘텐츠로 첨부할 수 있습니다.</div>
 <div id="contentArea" class="hidden">
 <label for="title">② 제목</label><input id="title" placeholder="게시 제목을 입력하세요">
 <label for="body">③ 본문</label><textarea id="body" placeholder="게시할 본문을 입력하세요"></textarea>
@@ -40,8 +37,8 @@ button{border:0;border-radius:11px;padding:13px;font-size:15px;font-weight:800;c
 <button class="secondary" id="copyBody">본문만 복사</button>
 </div>
 <div class="guide" style="margin-top:12px"><b>동영상 첨부 방법</b><br>
-이 퍼블리셔는 동영상을 네이버로 직접 전송하지 않습니다.<br>
-<strong>1. 동영상 링크 입력 → 2. 아래 ⑤ 버튼 → 3. 네이버 글쓰기에서 링크·제목·본문 붙여넣기 → 4. 전체 공개 → 발행</strong>
+이 퍼블리셔에서는 선택한 동영상을 확인하고 게시용 제목·본문·해시태그를 준비합니다.<br>
+<strong>1. 영상 선택 → 2. 제목·본문 자동 생성 확인 → 3. ⑤ 버튼으로 제목·본문 복사 → 4. 네이버 글쓰기에서 동영상을 직접 첨부 → 5. 전체 공개 → 발행</strong>
 </div>
 <div id="status" class="status"></div>
 <div class="checklist"><b>게시 체크</b>
@@ -54,13 +51,13 @@ button{border:0;border-radius:11px;padding:13px;font-size:15px;font-weight:800;c
 </div>
 </div>
 <div class="guide"><b>사용 순서</b><br>
-<b>① 동영상 선택</b> → 필요하면 <b>YouTube/Instagram 동영상 링크 입력</b> → 파일명에 맞는 제목·본문·해시태그 자동 준비 → <b>⑤ 제목·본문+링크 복사 + 네이버 글쓰기 열기</b> → 네이버 글쓰기에서 링크·제목·본문 붙여넣기 → <b>전체 공개</b> → 발행.<br><br>
-휴대폰의 영상 파일은 미리보기용입니다. 실제 동영상은 YouTube/Instagram의 공개 링크를 네이버 글쓰기에 붙여넣는 방식입니다.
+<b>① 동영상 선택</b> → 파일명에 맞는 <b>제목·본문·해시태그 자동 준비</b> → <b>⑤ 제목·본문 복사 + 네이버 글쓰기 열기</b> → 네이버 글쓰기에서 <b>동영상을 직접 첨부</b> → 복사한 제목·본문·해시태그를 붙여넣기 → <b>전체 공개</b> → 발행.<br><br>
+이 퍼블리셔는 게시 준비를 담당하고, 실제 동영상 첨부는 네이버 글쓰기에서 사용자가 직접 합니다.
 </div>
 </section></div>
 <script>
 const $=id=>document.getElementById(id);
-const keys=["title","body","tags","videoLink","c1","c2","c3","c4","c5"];
+const keys=["title","body","tags","c1","c2","c3","c4","c5"];
 const generic={title:"",body:"",tags:""};
 const posts={
 "1000021003.mp4":{title:"거래처가 돈을 안 주고 있나요? 거래처 미수금, 먼저 확인하세요",body:"거래처가 돈을 지급하지 않고 있다면 먼저 계약서와 거래내역부터 확인해보세요.\\n\\n① 계약서와 거래내역 확인\\n② 정확한 미지급 금액 계산\\n③ 지급 약속과 연락기록 보관\\n④ 거래명세서·세금계산서·납품확인서 등 관련 자료 정리\\n\\n특히 전체 거래금액에서 실제 입금액을 확인해 남은 미수금을 정확하게 계산하는 것이 중요합니다.\\n\\n미수금이 발생했다면 관련 자료를 정리해 현재 상황을 정확하게 확인해보세요.\\n\\n고려신용정보 | 채권관리·미수금 회수 상담",tags:"#미수금 #거래처미수금 #미수금회수 #채권추심 #채권관리 #거래대금 #대금미지급 #사업자"},
@@ -85,7 +82,7 @@ const posts={
 "18":{title:"거래처 미수금, 정확한 금액부터 계산하세요",body:"미수금 회수를 준비한다면 먼저 정확한 금액을 계산해보세요.\n\n계약상 총액에서 실제 입금액을 확인하고 추가 청구나 정산 내역까지 검토해 현재 남은 미수금을 정확하게 정리하는 것이 중요합니다."}
 };
 Object.keys(posts).forEach(k=>posts[k].tags="#미수금 #미수금회수 #채권추심 #미수금관리 #채권관리 #거래대금 #대금미지급 #사업자");
-const all=()=>[$("title").value.trim(),$("body").value.trim(),$("tags").value.trim(),$("videoLink").value.trim()?("동영상 링크\n"+$("videoLink").value.trim()):""].filter(Boolean).join("\n\n");
+const all=()=>[$("title").value.trim(),$("body").value.trim(),$("tags").value.trim()].filter(Boolean).join("\n\n");
 function save(){keys.forEach(k=>{const el=$(k);if(el)localStorage.setItem("naverBlog_"+k,el.type==="checkbox"?String(el.checked):el.value);});}
 function clearSaved(){keys.forEach(k=>localStorage.removeItem("naverBlog_"+k));location.reload();}
 function prepareContent(filename){
@@ -121,7 +118,7 @@ $("video").addEventListener("click",()=>{$("video").value=""});
 $("video").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const p=$("preview");p.src=URL.createObjectURL(f);p.style.display="block";$("fileInfo").innerHTML='<span class="pill">'+f.name+'</span><span class="pill">'+(f.size/1024/1024).toFixed(1)+' MB</span>';$("contentArea").classList.remove("hidden");prepareContent(f.name);$("c1").checked=true;$("c2").checked=false;$("c3").checked=false;$("c4").checked=false;save();const m=f.name.match(/(?:short[_-]?|쇼츠[_-]?)(0?\d{1,2})/i);$("status").textContent=m&&posts[m[1]]?"영상에 맞는 게시 내용을 준비했습니다.":"영상 파일명을 확인해 기본 게시 내용을 준비했습니다.";});
 $("copy").onclick=()=>copyText(all(),"제목·본문·해시태그를 모두 복사했습니다.");
 $("copyBody").onclick=()=>copyText($("body").value.trim(),"본문을 복사했습니다.");
-$("ready").onclick=async()=>{const link=$("videoLink").value.trim();if(link&&!/^https:\/\/(www\.)?(youtube\.com|youtu\.be|instagram\.com)\//i.test(link)){$("status").textContent="YouTube 또는 Instagram 링크를 입력해주세요.";return;}if(!markReady()){$("status").textContent="제목·본문·해시태그를 먼저 확인해주세요.";return;}await copyText(all(),"제목·본문·해시태그를 복사했습니다. 네이버 글쓰기를 엽니다.");$("c2").checked=true;$("c3").checked=true;$("c4").checked=true;$("c5").checked=true;save();setTimeout(()=>window.open("https://blog.naver.com/thkim5579","_blank"),250);};
+$("ready").onclick=async()=>{if(!markReady()){$("status").textContent="제목·본문·해시태그를 먼저 확인해주세요.";return;}await copyText(all(),"제목·본문·해시태그를 복사했습니다. 네이버 글쓰기를 엽니다.");$("c2").checked=true;$("c3").checked=true;$("c4").checked=true;$("c5").checked=true;save();setTimeout(()=>window.open("https://blog.naver.com/thkim5579","_blank"),250);};
 
 $("reset").onclick=()=>{if(confirm("저장된 제목·본문·태그를 초기화할까요?"))clearSaved();};
 </script></body></html>
