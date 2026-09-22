@@ -68,7 +68,7 @@ $("copy").onclick=async()=>{
 $("post").onclick=async()=>{
  try{await copyPost();}catch(e){}
  $("status").textContent="게시 내용이 복사되었습니다. 네이버 블로그 글쓰기 화면을 엽니다.";
- window.open("https://blog.naver.com/PostWriteForm.naver","_blank");
+ window.open("https://blog.naver.com/PostWriteForm.naver?blogId=thkim5579","_blank");
 };
 $("openPage").onclick=()=>{
  window.open("https://organizer7899-bot.github.io/naver-blog-publisher/publisher02/","_blank");
