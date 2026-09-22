@@ -18,7 +18,7 @@ textarea{min-height:220px;margin-top:8px}input{border:1px solid #ccd3dc}button{b
 <h1>네이버 블로그 게시 준비</h1>
 <div class="card">
 <p class="step">① 동영상 선택</p>
-<input id="video" type="file" accept="video/*">
+<input id="video" type="file" accept="video/*" onchange="if(this.files&&this.files[0]){handleVideoFile(this.files[0]);}">
 <div id="fileInfo" class="info"></div>
 </div>
 <div id="content" class="card hidden">
@@ -51,8 +51,8 @@ tags:"#미수금 #미수금회수 #거래처미수금 #연락기록 #채권추�
 }
 }};
 const $=id=>document.getElementById(id);
-$("video").addEventListener("change",e=>{
- const f=e.target.files[0]; if(!f)return;
+function handleVideoFile(f){
+ if(!f)return;
  $("fileInfo").textContent=f.name;
  const p=posts[f.name];
  if(p){
@@ -64,7 +64,8 @@ $("video").addEventListener("change",e=>{
   $("title").value="";$("body").value="";$("tags").value="";
   $("status").textContent="아직 이 영상에 대한 게시 내용이 등록되지 않았습니다.";
  }
-});
+}
+$("video").addEventListener("change",e=>handleVideoFile(e.target.files[0]));
 $("copy").onclick=async()=>{
  const text=$("title").value+"\n\n"+$("body").value+"\n\n"+$("tags").value;
  await navigator.clipboard.writeText(text);
