@@ -58,9 +58,29 @@ $("video").addEventListener("change",e=>{
   $("status").textContent="아직 이 영상에 대한 게시 내용이 등록되지 않았습니다.";
  }
 });
+async function copyText(text){
+ try{
+  if(navigator.clipboard && window.isSecureContext){
+   await navigator.clipboard.writeText(text);
+   return true;
+  }
+ }catch(e){}
+ const ta=document.createElement("textarea");
+ ta.value=text;
+ ta.style.position="fixed";
+ ta.style.left="-9999px";
+ document.body.appendChild(ta);
+ ta.focus();
+ ta.select();
+ ta.setSelectionRange(0,ta.value.length);
+ let ok=false;
+ try{ok=document.execCommand("copy");}catch(e){}
+ document.body.removeChild(ta);
+ return ok;
+}
 async function copyPost(){
  const text=$("title").value+"\n\n"+$("body").value+"\n\n"+$("tags").value;
- await navigator.clipboard.writeText(text);
+ await copyText(text);
  return text;
 }
 $("copy").onclick=async()=>{
